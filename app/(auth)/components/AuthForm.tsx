@@ -9,11 +9,11 @@ import SocialMediaAuth from "./SocialMediaAuth";
 type variants = "LOGIN" | "REGISTER";
 
 function AuthForm() {
-  const [variant, setVariant] = useState<variants>("REGISTER");
+  const [variant, setVariant] = useState<variants>("LOGIN");
 
   return (
-    <div className="w-full px-2">
-      <div className="flex flex-col shadow-md px-5 py-7 rounded-md bg-white gap-5">
+    <div className="w-full px-2 flex flex-col items-center justify-center">
+      <div className="flex flex-col shadow-md p-8 sm:p-10 rounded-md bg-white gap-5 w-full sm:w-full sm:max-w-md">
         {variant === "REGISTER" && (
           <FormInput label={"Name"} id={"name"} type={"text"} />
         )}
@@ -28,6 +28,23 @@ function AuthForm() {
         </div>
 
         <SocialMediaAuth />
+
+        <div className="flex gap-1 mt-2">
+          <p className="text-xs text-gray-600">
+            {variant === "LOGIN"
+              ? "Don't have an account?"
+              : "Already have an account?"}
+          </p>
+
+          <p
+            onClick={() =>
+              setVariant(variant === "LOGIN" ? "REGISTER" : "LOGIN")
+            }
+            className="text-xs text-blue-600 cursor-pointer underline hover:text-blue-700"
+          >
+            {variant === "LOGIN" ? "Register" : "Sign in"}
+          </p>
+        </div>
       </div>
     </div>
   );

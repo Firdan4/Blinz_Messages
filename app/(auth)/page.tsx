@@ -12,7 +12,9 @@ export default function Home() {
           width={100}
           height={100}
         />
-        <h2 className="text-center text-xl font-bold">Sign in your account</h2>
+        <h2 className="text-center text-xl sm:text-2xl md:text-3xl font-bold">
+          Sign in your account
+        </h2>
       </div>
       <AuthForm />
     </div>
