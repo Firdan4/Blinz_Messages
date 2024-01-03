@@ -3,8 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import LoadingProvider from "@/context/LoadingProvider";
 import ToesterContext from "@/context/ToesterContext";
-import getSession from "@/hook/getSession";
-import getCurrentUser from "@/hook/getCurrentUser";
+import getSession from "@/action/getSession";
+import getCurrentUser from "@/action/getCurrentUser";
+import { Provider } from "react-redux";
+import { store } from "./libs/redux/store";
+import AuthContext from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +26,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} h-full bg-gray-100`}>
-        <ToesterContext />
-        <LoadingProvider>{children}</LoadingProvider>
+        <AuthContext>
+          <ToesterContext />
+          <LoadingProvider>{children}</LoadingProvider>
+        </AuthContext>
       </body>
     </html>
   );

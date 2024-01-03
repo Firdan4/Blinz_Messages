@@ -6,6 +6,10 @@ import { toast } from "react-hot-toast";
 interface propsLogin {
   data: FieldValues;
 }
+interface propsLoginSosmed {
+  action: string;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+}
 
 async function login({ data }: propsLogin) {
   await signIn("credentials", {
@@ -20,6 +24,20 @@ async function login({ data }: propsLogin) {
       toast.success("Sign in Successfuly!");
     }
   });
+}
+
+export async function loginSosmed({ action, setIsLoading }: propsLoginSosmed) {
+  signIn(action, { redirect: false })
+    .then((callback) => {
+      if (callback?.error) {
+        toast.error("Invalid Credential");
+      }
+
+      if (callback?.ok && !callback.error) {
+        toast.success("Logged In!");
+      }
+    })
+    .finally(() => setIsLoading(false));
 }
 
 export default login;

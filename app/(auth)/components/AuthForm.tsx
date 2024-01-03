@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Spinner } from "@material-tailwind/react";
 
 import FormInput from "./FormInput";
@@ -10,11 +10,16 @@ import axios from "axios";
 import { useLoading } from "@/context/LoadingProvider";
 import login from "@/app/libs/auth/login";
 import registerAccount from "@/app/libs/auth/register";
-import getSession from "@/hook/getSession";
+import getSession from "@/action/getSession";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type variants = "LOGIN" | "REGISTER";
 
 function AuthForm() {
+  const session = useSession();
+  const router = useRouter();
+
   const { setIsLoading } = useLoading();
 
   const [variant, setVariant] = useState<variants>("LOGIN");
@@ -31,10 +36,18 @@ function AuthForm() {
     },
   });
 
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("/messages");
+    }
+    // console.log(session);
+  }, [session?.status, router]);
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     if (variant === "LOGIN") {
       await login({ data });
+      router.push("/messages");
       setIsLoading(false);
     }
 

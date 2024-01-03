@@ -20,7 +20,7 @@ export const getUser = query({
 export const create = mutation({
   args: {
     email: v.string(),
-    password: v.string(),
+    password: v.optional(v.string()),
     name: v.string(),
   },
   handler: async (ctx, args) => {
@@ -34,6 +34,29 @@ export const create = mutation({
       gender: "",
       code,
       image: "",
+      status: "",
+    });
+
+    return user;
+  },
+});
+
+export const createBySosmed = mutation({
+  args: {
+    email: v.string(),
+    name: v.string(),
+    image: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const code = generateCode();
+    const user = await ctx.db.insert("users", {
+      email: args.email,
+      name: args.name,
+      last_login_at: "",
+      birthdate: "",
+      gender: "",
+      code,
+      image: args.image,
       status: "",
     });
 
