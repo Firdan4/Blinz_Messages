@@ -23,7 +23,7 @@ export const CardWrapper = ({
     <Card className="w-[90%] max-w-[25rem] duration-300">
       <CardHeader>
         <p className="text-gray-600 text-lg text-center font-medium">
-          Sign in your account
+          {headerLabel}
         </p>
       </CardHeader>
       <CardContent>{children}</CardContent>
