@@ -1,8 +1,19 @@
 "use server";
 
-import { RegisterSchema } from "@/schemas";
 import * as z from "zod";
 
-export const register = (value: z.infer<typeof RegisterSchema>) => {
-  console.log(value);
+import bcrypt from "bcrypt";
+
+import { RegisterSchema } from "@/schemas";
+
+export const register = async (value: z.infer<typeof RegisterSchema>) => {
+  const validationFields = RegisterSchema.safeParse(value);
+
+  if (!validationFields.success) {
+    return { error: "Invalid Field!" };
+  }
+
+  const { email, name, password } = validationFields.data;
+
+  return { success: "User created!" };
 };
