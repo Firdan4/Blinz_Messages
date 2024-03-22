@@ -18,6 +18,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState, useTransition } from "react";
 import { register } from "@/actions/register";
+import { FormError } from "../form-error";
+import { FormSuccess } from "../form-success";
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -106,8 +108,11 @@ export const RegisterForm = () => {
             />
           </div>
 
+          <FormError message={error} />
+          <FormSuccess message={success} />
+
           <Button type="submit" className="w-full">
-            Register
+            Create an account
           </Button>
         </form>
       </Form>
